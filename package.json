@@ -1,6 +1,6 @@
 {
   "name": "phenix-reguflow",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Phenix / Project ReguFlow - B2B Circular Economy Platform for Industrial Byproduct Matching, Resource Exchange, and Impact Analytics (Viksit Bharat 2026 Showcase)",
   "type": "module",
   "private": true,
@@ -11,7 +11,8 @@
     "test": "node --test tests/unit/*.test.js tests/e2e/*.test.js",
     "test:unit": "node --test tests/unit/*.test.js",
     "test:e2e": "node --test tests/e2e/*.test.js",
-    "seed": "node scripts/seed.js"
+    "seed": "node scripts/seed.js",
+    "start": "node src/index.js"
   },
   "keywords": [
     "circular-economy",
@@ -22,7 +23,8 @@
     "haversine-logistics",
     "zero-dependency",
     "nodejs-v24",
-    "viksit-bharat-2026"
+    "viksit-bharat-2026",
+    "production-ready"
   ],
   "author": "Team T0010 (Ashwin Maurya, Arnav Gupta, Shaurya Pratap Singh, Yashvardhan Mundhra)",
   "license": "MIT"
