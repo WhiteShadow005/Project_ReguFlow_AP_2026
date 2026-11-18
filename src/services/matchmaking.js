@@ -256,11 +256,23 @@ export function calculateMatchScore(supplyListing, demandReq, distanceKm = 0, or
   let netScore = 0.0;
   let eligible = true;
 
+  const maxDistance = demandReq?.max_logistics_distance_km ?? demandReq?.maxLogisticsDistanceKm;
+  const isDistanceBreached = maxDistance !== undefined && maxDistance !== null && maxDistance > 0 && Number(distanceKm) > Number(maxDistance);
+  const isQtyIncompatible = qtyResult.score <= 0.0;
+
   // Hard zero threshold: if S_mat < 0.50, candidate is deemed fundamentally incompatible
   if (matResult.score < 0.50) {
     netScore = 0.0;
     eligible = false;
     allReasons.push(`Hard incompatibility: Material compatibility score (${matResult.score.toFixed(3)}) is below 0.50 threshold`);
+  } else if (isQtyIncompatible) {
+    netScore = 0.0;
+    eligible = false;
+    allReasons.push('Hard incompatibility: Available quantity is zero or below minimum order quantity');
+  } else if (isDistanceBreached) {
+    netScore = 0.0;
+    eligible = false;
+    allReasons.push(`Hard incompatibility: Distance ${distanceKm} km exceeds maximum allowable distance ${maxDistance} km`);
   } else {
     netScore = (normWeights.material * matResult.score) +
                (normWeights.quantity * qtyResult.score) +
@@ -324,6 +336,11 @@ export function rankCandidates(demandReq, supplyListings, facilitiesMap = {}, or
   const receiverOrgId = demandFacility?.organization_id ?? demandFacility?.organizationId ?? demandReq.organization_id ?? demandReq.organizationId;
   const orgReceiver = demandReq.organization ?? getOrganization(receiverOrgId);
 
+  const hasDemandCoords = demandFacility &&
+    typeof demandFacility.latitude === 'number' && typeof demandFacility.longitude === 'number';
+  const demandLat = hasDemandCoords ? demandFacility.latitude : null;
+  const demandLon = hasDemandCoords ? demandFacility.longitude : null;
+
   const candidates = [];
 
   for (const listing of supplyListings) {
@@ -334,11 +351,10 @@ export function rankCandidates(demandReq, supplyListings, facilitiesMap = {}, or
 
     // Compute distance if facilities have coordinates
     let distanceKm = 0.0;
-    if (demandFacility && listingFacility &&
-        typeof demandFacility.latitude === 'number' && typeof demandFacility.longitude === 'number' &&
+    if (hasDemandCoords && listingFacility &&
         typeof listingFacility.latitude === 'number' && typeof listingFacility.longitude === 'number') {
       distanceKm = haversineDistance(
-        demandFacility.latitude, demandFacility.longitude,
+        demandLat, demandLon,
         listingFacility.latitude, listingFacility.longitude
       );
     } else if (listing.distance_km !== undefined || listing.distanceKm !== undefined) {
@@ -353,6 +369,10 @@ export function rankCandidates(demandReq, supplyListings, facilitiesMap = {}, or
       orgReceiver,
       options.weights
     );
+
+    if (options.onlyEligible && !matchResult.eligible) {
+      continue;
+    }
 
     const tradeQty = Math.min(
       Number(listing.available_quantity ?? listing.availableQuantity ?? 0.0),
