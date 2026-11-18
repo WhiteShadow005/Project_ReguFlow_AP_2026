@@ -1,7 +1,11 @@
 erDiagram
     ORGANIZATIONS ||--o{ FACILITIES : "owns_and_operates"
     ORGANIZATIONS ||--o{ LOGISTICS_TRANSITS : "carries_haulage"
+<<<<<<< HEAD
     ORGANIZATIONS |o--o{ AUDIT_LOGS : "performs_action"
+=======
+    ORGANIZATIONS ||--o{ AUDIT_LOGS : "performs_action"
+>>>>>>> feature/member-1-core-gateway
 
     FACILITIES ||--o{ BYPRODUCT_LISTINGS : "supplies_output"
     FACILITIES ||--o{ DEMAND_REQUIREMENTS : "demands_input"
@@ -18,7 +22,11 @@ erDiagram
     MATCH_PROPOSALS ||--o| EXCHANGE_TRANSACTIONS : "executes_into"
 
     EXCHANGE_TRANSACTIONS ||--o{ LOGISTICS_TRANSITS : "transported_via"
+<<<<<<< HEAD
     EXCHANGE_TRANSACTIONS ||--o| ESG_IMPACT_METRICS : "quantifies_impact"
+=======
+    EXCHANGE_TRANSACTIONS ||--|| ESG_IMPACT_METRICS : "quantifies_impact"
+>>>>>>> feature/member-1-core-gateway
 
     ORGANIZATIONS {
         uuid org_id PK "Primary Key"

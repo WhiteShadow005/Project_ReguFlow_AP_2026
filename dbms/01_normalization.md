@@ -281,11 +281,17 @@ $$\text{agreed\_total\_inr} = \text{agreed\_quantity} \times \text{agreed\_unit\
 - Here, $\{\text{agreed\_quantity}, \text{agreed\_unit\_price\_inr}\} \to \text{agreed\_total\_inr}$.
 - Since $\{\text{agreed\_quantity}, \text{agreed\_unit\_price\_inr}\}$ is not a superkey, storing `agreed_total_inr` could introduce a transitive/functional redundancy anomaly.
 - **Resolution**:
+<<<<<<< HEAD
   In PostgreSQL 14+, `agreed_total_inr` is constrained by an invariant schema-level integrity check:
   ```sql
   CONSTRAINT chk_txn_total_math CHECK (agreed_total_inr = ROUND(agreed_quantity * agreed_unit_price_inr, 2))
   ```
   Storing the frozen contractual financial total in financial ledgers is statutory under the Indian Goods and Services Tax (GST) Act 2017 to protect legally binding invoices against floating-point recalculation discrepancies. By enforcing an equality check constraint at the database engine level, functional redundancy and update discrepancies are strictly eradicated, satisfying 3NF.
+=======
+  In PostgreSQL 14+, `agreed_total_inr` is constrained by an invariant integrity check:
+  `CHECK (agreed_total_inr = ROUND(agreed_quantity * agreed_unit_price_inr, 2))`
+  or calculated dynamically. Storing the frozen contractual financial total in financial ledgers is statutory under the Indian Goods and Services Tax (GST) Act 2017 to protect legally binding invoices against floating-point recalculation discrepancies. By enforcing an equality check constraint, functional redundancy is eliminated, satisfying 3NF.
+>>>>>>> feature/member-1-core-gateway
 
 #### Case 3: Logistics Transit Net Weight
 In $R_8(\text{Logistics\_Transits})$:
@@ -355,8 +361,13 @@ Let $R$ be a relation schema and $F$ be a set of functional dependencies on $R$.
 1. $(R_1 \cap R_2) \to R_1$
 2. $(R_1 \cap R_2) \to R_2$
 
+<<<<<<< HEAD
 #### Lemma (Binary Join Tree Equivalence):
 A multi-way decomposition $\rho = \{R_1, R_2, \dots, R_k\}$ of relation $R$ is lossless if it can be represented as a sequence of successive binary lossless decompositions (or equivalently, as a rooted binary join tree where every binary join operation $R_A \bowtie R_B$ satisfies Heath's condition).
+=======
+#### Lemma:
+A multi-way decomposition $\rho = \{R_1, R_2, \dots, R_k\}$ of relation $R$ is lossless if it can be represented as a sequence of successive binary lossless decompositions.
+>>>>>>> feature/member-1-core-gateway
 
 #### Proof for Project ReguFlow Decomposition:
 Consider the successive decomposition of $\mathcal{U}_{\text{CircularExchange}}$:
@@ -404,6 +415,7 @@ Consider the successive decomposition of $\mathcal{U}_{\text{CircularExchange}}$
    - Decomposition 7 is **lossless**.
 
 8. **Decomposition 8 ($\mathcal{U}_7 \to R_8 \cup \mathcal{U}_8$)**:
+<<<<<<< HEAD
    - $R_8 = \text{Logistics\_Transits}$, with primary key `transit_id` and foreign key `transaction_id`.
    - Shared attributes: $R_8 \cap \mathcal{U}_7 = \{\text{transaction\_id}\}$.
    - In $\mathcal{U}_7$, `transaction_id` is the primary key of $R_7$ ($\text{FD}_{7.1}: \{\text{transaction\_id}\} \to R_7$).
@@ -449,6 +461,23 @@ $$\exists X \in \{R_A, R_B\} \quad \text{such that} \quad (R_A \cap R_B) \to X \
 Therefore, by Heath's Theorem:
 $$\Pi_{R_1}(\mathcal{U}) \bowtie \Pi_{R_2}(\mathcal{U}) \bowtie \dots \bowtie \Pi_{R_{10}}(\mathcal{U}) \equiv \mathcal{U}$$
 Every binary join operation in the reconstruction tree shares a non-empty set of attributes that is a candidate key of at least one branch. Thus, no Cartesian products occur, and the decomposition is rigorously proven to be **guaranteed lossless**; no spurious tuples can ever be generated when joining normalized relations. $\blacksquare$
+=======
+   - $R_8 = \text{Logistics\_Transits}$, with primary key `transit_id`.
+   - Shared attributes: $R_8 \cap \mathcal{U}_8 = \{\text{transit\_id}\}$.
+   - From $\text{FD}_{8.1}$, $\{\text{transit\_id}\} \to R_8$.
+   - Decomposition 8 is **lossless**.
+
+9. **Decomposition 9 ($\mathcal{U}_8 \to R_9 \cup R_{10}$)**:
+   - $R_9 = \text{ESG\_Impact\_Metrics}$, with primary key `metric_id` and candidate key `transaction_id`.
+   - $R_{10} = \text{Audit\_Logs}$, with primary key `log_id`.
+   - For $R_9$, $R_9 \cap R_{10} = \emptyset$ (or linked via `transaction_id` audit trace), and within their sub-scopes, each possesses its own candidate key.
+
+By mathematical induction on the 9 decomposition steps, for every step $i \in \{1, \dots, 9\}$, the intersection $R_i \cap \mathcal{U}_i$ forms a candidate key of $R_i$.
+$$\forall i, (R_i \cap \mathcal{U}_i) \to R_i \in F^+$$
+Therefore, by Heath's Theorem:
+$$\Pi_{R_1}(\mathcal{U}) \bowtie \Pi_{R_2}(\mathcal{U}) \bowtie \dots \bowtie \Pi_{R_{10}}(\mathcal{U}) \equiv \mathcal{U}$$
+The decomposition is rigorously proven to be **guaranteed lossless**; no spurious tuples can ever be generated when joining normalized relations. $\blacksquare$
+>>>>>>> feature/member-1-core-gateway
 
 ---
 

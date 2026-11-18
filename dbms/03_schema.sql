@@ -317,8 +317,12 @@ CREATE TABLE exchange_transactions (
     settled_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+<<<<<<< HEAD
     CONSTRAINT chk_distinct_trading_facilities CHECK (seller_facility_id <> buyer_facility_id),
     CONSTRAINT chk_txn_total_math CHECK (agreed_total_inr = ROUND(agreed_quantity * agreed_unit_price_inr, 2))
+=======
+    CONSTRAINT chk_distinct_trading_facilities CHECK (seller_facility_id <> buyer_facility_id)
+>>>>>>> feature/member-1-core-gateway
 );
 
 -- ============================================================================
