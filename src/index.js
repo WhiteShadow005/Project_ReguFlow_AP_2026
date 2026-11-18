@@ -35,7 +35,8 @@ export {
 export {
   getDatabase,
   initSchema,
-  runSchema
+  runSchema,
+  prepareCached
 } from './db/database.js';
 
 export {
