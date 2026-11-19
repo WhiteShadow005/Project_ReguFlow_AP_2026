@@ -3,6 +3,7 @@
 -- Track: Viksit Bharat 2026 Circular Economy Showcase
 -- Domain: Industrial Byproduct Matching, Resource Exchange, and Impact Analytics
 -- Target Database: PostgreSQL 14+ (ANSI SQL Standard Compliant)
+-- Authors: Team T0010 Core Database Engineering (Ashwin Maurya, Shaurya Pratap Singh, Yashvardhan Mundhra, Arnav Gupta)
 -- ============================================================================
 
 -- ----------------------------------------------------------------------------
