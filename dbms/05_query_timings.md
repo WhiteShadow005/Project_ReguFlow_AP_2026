@@ -5,7 +5,7 @@
 **Target RDBMS**: PostgreSQL 14+ / 16+ (ANSI SQL Standard Compliant)  
 **Schema Definition**: `dbms/03_schema.sql` (10 BCNF-Normalized Entity Relations)  
 **Core Queries**: `dbms/04_queries.sql` (Queries Q1 through Q8)  
-**Author**: Team T0010 Core Database Engineering  
+**Authors**: Team T0010 Core Database Engineering (Ashwin Maurya, Shaurya Pratap Singh, Yashvardhan Mundhra, Arnav Gupta)  
 **Date**: November 2026  
 
 ---
