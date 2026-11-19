@@ -4,7 +4,7 @@
 **National Showcase**: Viksit Bharat 2026 Circular Economy & Resource Efficiency  
 **Target Architecture**: Production Relational Storage (PostgreSQL 14+ / ANSI SQL)  
 **Deliverable**: CP1 Normalization Specification & Mathematical Proofs  
-**Author**: Team ReguFlow (DBMS & Systems Architecture Specialist)  
+**Authors**: Team T0010 (Ashwin Maurya, Shaurya Pratap Singh, Yashvardhan Mundhra, Arnav Gupta)  
 **Date**: November 2026  
 
 ---
