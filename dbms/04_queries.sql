@@ -5,7 +5,7 @@
 -- Database Target: PostgreSQL 14+ / 16+ (ANSI SQL Standard Compliant)
 -- Module: CP3 - Production Query Workflows
 -- ============================================================================
--- Authors: Team T0010 (Project ReguFlow / Phenix Core Database Engineering)
+-- Authors: Team T0010 Core Database Engineering (Ashwin Maurya, Shaurya Pratap Singh, Yashvardhan Mundhra, Arnav Gupta)
 -- Schema Reference: dbms/03_schema.sql (BCNF Normalized Relational Model)
 -- Description:
 --   This file contains all 8 production-grade SQL queries implementing the core
